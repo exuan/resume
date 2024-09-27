@@ -2,11 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import packageJson from './package.json'
-import importCss from 'vite-plugin-import-css'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [dts(), react(), importCss()],
+  plugins: [dts(), react()],
   build: {
     lib: {
       entry: 'src/index.ts',
@@ -15,6 +14,9 @@ export default defineConfig({
     },
     emptyOutDir: false,
     rollupOptions: {
+      output: {
+        banner: '"use client";',
+      },
       external: Object.keys(packageJson.dependencies),
     },
   },

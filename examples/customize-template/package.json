@@ -1,0 +1,14 @@
+{
+  "name": "customize-template",
+  "private": true,
+  "scripts": {
+    "dev": "resume --template @resumejs/template-nova"
+  },
+  "dependencies": {
+    "@resumejs/components": "workspace:*",
+    "@resumejs/resume": "workspace:*",
+    "@resumejs/template-nova": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

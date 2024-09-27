@@ -1,22 +1,22 @@
 {
   "name": "@resumejs/resume",
-  "version": "0.4.0",
-  "bin": {
-    "resume": "./dist/index.ts.mjs"
+  "version": "0.9.5",
+  "author": "dengqing <dengqing0821@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://resume.todev.cc",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dunqing/resume.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dunqing/resume/issues"
   },
   "keywords": [
     "resume",
     "cli"
   ],
-  "homepage": "https://resume.todev.cc",
-  "bugs": {
-    "url": "https://github.com/Dunqing/resume/issues"
-  },
-  "license": "MIT",
-  "author": "dengqing <dengqing0821@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dunqing/resume.git"
+  "bin": {
+    "resume": "./dist/index.mjs"
   },
   "scripts": {
     "build": "unbuild",
@@ -25,22 +25,23 @@
   },
   "peerDependencies": {
     "@resumejs/components": "workspace:*",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^17.0.2 || ^18.0.0",
+    "react-dom": "^17.0.2 || ^18.0.0"
   },
   "dependencies": {
     "@resumejs/components": "workspace:*",
     "@types/minimist": "^1.2.2",
-    "@types/react": "^17.0.47",
-    "@types/react-dom": "^17.0.17",
-    "@vitejs/plugin-react": "^1.3.2",
-    "kolorist": "^1.5.1",
-    "magic-string": "^0.26.2",
-    "minimist": "^1.2.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "unbuild": "^0.7.4",
-    "vite": "^2.9.13"
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.4",
+    "kolorist": "^1.8.0",
+    "magic-string": "^0.30.2",
+    "minimist": "^1.2.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "unbuild": "^1.2.1",
+    "vite": "^4.4.9",
+    "vite-plugin-pwa": "^0.16.5"
   },
   "publishConfig": {
     "access": "public"

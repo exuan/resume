@@ -1,13 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
+import { createRoot } from 'react-dom/client'
+import { TemplateProvider } from './contexts/template'
 import App from './App'
+import 'uno.css'
+import '@unocss/reset/tailwind.css'
 
-ReactDOM.render(
+const container = createRoot(document.getElementById('root')!)
+
+container.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <TemplateProvider>
+        <App />
+      </TemplateProvider>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root')
 )

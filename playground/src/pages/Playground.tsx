@@ -1,32 +1,32 @@
+import type * as monaco from 'monaco-editor'
 import type { ChangeHandler } from 'react-monaco-editor'
 import MonacoEditor from 'react-monaco-editor'
-import { Resume } from '@resumejs/components'
-import { languages } from 'monaco-editor'
-import { useEffect, useRef } from 'react'
-import 'uno.css'
-import '@unocss/reset/tailwind.css'
-import './playground.css'
-import { ErrorBoundary } from 'react-error-boundary'
+import { editor, languages } from 'monaco-editor'
+import { useState } from 'react'
 import useResume from '../hooks/useResume'
-import { FallbackComponent } from '../components/FallbackComponent'
+import Resume from '../components/Resume'
+import Template from '../components/Template'
+import './playground.css'
+import githubDarkTheme from '../constants/github-dark-theme'
+import githubLightTheme from '../constants/github-light-theme'
+
+editor.defineTheme('github-light', githubLightTheme)
+editor.defineTheme('github-dark', githubDarkTheme)
 
 languages.register({
   id: 'markdown',
 })
 
 function Playground() {
-  const monacoRef = useRef<MonacoEditor | null>(null)
-
   const [code, setCode] = useResume()
+  const [, forceUpdate] = useState([])
 
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      monacoRef.current?.forceUpdate()
-    })
-  })
-
-  const options = {
+  const options: monaco.editor.IStandaloneEditorConstructionOptions = {
     selectOnLineNumbers: true,
+    automaticLayout: true,
+    minimap: {
+      enabled: false,
+    },
   }
 
   const onEditorChange: ChangeHandler = (value) => {
@@ -34,28 +34,38 @@ function Playground() {
   }
 
   return (
-    <div className="playground flex items-center flex-col justify-center relative sm:black">
-      <div className="text-lg xs:block sm:hidden p-y-2 font-bold">
+    <div className="dark:bg-dark-400 playground flex items-center flex-col justify-center relative sm:black">
+      <div className="print:hidden text-lg xs:block sm:hidden p-y-2 font-bold">
         <span className="text-red">注意</span>：请在大屏幕下编辑简历！
       </div>
-      <div className="flex justify-center items-center lg:h-screen md:p-x-10">
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-2 overflow-hidden lg:h-5/6">
-          <div className="hidden md:block md:h-55rem lg:h-full">
+      <div className="flex justify-center items-center md:h-screen">
+        <div className="grid md:grid-cols-2 grid-cols-1 md:overflow-hidden h-full">
+          <div className="hidden md:block h-full md:h-full">
             <MonacoEditor
-              ref={monacoRef}
               language="markdown"
               value={code}
               options={options}
-              theme="vs-dark"
+              theme={
+                document.body.classList.contains('dark')
+                  ? 'github-dark'
+                  : 'github-light'
+              }
               onChange={onEditorChange}
             />
           </div>
-          <ErrorBoundary
-            resetKeys={[code]}
-            FallbackComponent={FallbackComponent}
-          >
-            <Resume className="lg:overflow-y-scroll">{code || ''}</Resume>
-          </ErrorBoundary>
+          <div className="md:h-full md:overflow-y-auto">
+            <Resume
+              templateContextProps={{
+                extraToolboxButton: <Template></Template>,
+              }}
+              onDarkClass={(className: string, action) => {
+                document.body.classList[action]?.(className)
+                forceUpdate([])
+              }}
+            >
+              {code || ''}
+            </Resume>
+          </div>
         </div>
       </div>
     </div>
